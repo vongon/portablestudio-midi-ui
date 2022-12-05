@@ -26,8 +26,8 @@ console.log("Enter MIDI Device Name on line 3 of midi-ui.html");
   <button onclick="sendMidiMessage([0xB0,0x50,0x00])">FAST FORWARD</button>
   <br>
   <div style="margin-top: 20px;">TAPE DIRECTION</div>
-  <button onclick="sendMidiMessage([0xB0,0x53,0x7F])">FORWARD</button>
   <button onclick="sendMidiMessage([0xB0,0x53,0x00])">REVERSE</button>
+  <button onclick="sendMidiMessage([0xB0,0x53,0x7F])">FORWARD</button>
   <br>
   <div style="margin-top: 20px;">VARISPEED</div>
   <button onclick="sendMidiMessage([0xB0,0x55,0x7F])">ENABLE</button>
