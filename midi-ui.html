@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<script>
+const MIDI_DEVICE_NAME = "MIDI Monitor (Untitled)"; //Enter your midi device here
+console.log("Enter MIDI Device Name on line 3 of midi-ui.html");
+</script>
+<style>
+  button {margin-top: 5px;}
+</style>
+<h1>VONGON PORTABLE STUDIO</h1>
+<h3>MILESTONE 1, Testing UI</h3>
+<div>MIDI CHANNEL: 1</div>
+<div>See developer console for instructions on setting MIDI device.</div>
+<hr>
+<div style="text-align: center;">
+  <div style="margin-top: 20px;">TRANSPORT</div>
+  <button onclick="sendMidiMessage([0xFA])">START</button>
+  <br>
+  <button onclick="sendMidiMessage([0xFB])">CONTINUE</button>
+  <br>
+  <button onclick="sendMidiMessage([0xFC])">STOP</button>
+  <br>
+  <button onclick="sendMidiMessage([0xB0,0x52,0x7F])">RECORD ENABLE</button>
+  <button onclick="sendMidiMessage([0xB0,0x52,0x00])">RECORD DISABLE</button>
+  <br>
+  <button onclick="sendMidiMessage([0xB0,0x51,0x00])">REWIND</button>
+  <button onclick="sendMidiMessage([0xB0,0x50,0x00])">FAST FORWARD</button>
+  <br>
+  <div style="margin-top: 20px;">TAPE DIRECTION</div>
+  <button onclick="sendMidiMessage([0xB0,0x53,0x7F])">FORWARD</button>
+  <button onclick="sendMidiMessage([0xB0,0x53,0x00])">REVERSE</button>
+  <br>
+  <div style="margin-top: 20px;">VARISPEED</div>
+  <button onclick="sendMidiMessage([0xB0,0x55,0x7F])">ENABLE</button>
+  <button onclick="sendMidiMessage([0xB0,0x55,0x00])">DISABLE</button>
+</div>
+</html>
+<script>
+
+const CONTROL_CHANGE = 0xBF;
+const PROGRAM_CHANGE = 0xCF;
+let midiOutput = null;
+
+function sendMidiMessage(message){
+  console.log("message:", message);
+  midiOutput.send(message);
+}
+
+
+navigator.requestMIDIAccess()
+.then(function(midiAccess) {
+  const outputs = midiAccess.outputs.values();
+  const outputs_size = midiAccess.outputs.size;
+  let midi_outputs = [];
+  for(const output of outputs) {
+    midi_outputs.push(output);
+    if(output.name == MIDI_DEVICE_NAME){
+      midiOutput = output;
+    }
+  }
+  console.log("MIDI OUTPUTS:", midi_outputs); 
+  console.log("SELECTED MIDI OUTPUT:", midiOutput);
+});
+
+</script>
